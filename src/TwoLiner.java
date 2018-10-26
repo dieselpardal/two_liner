@@ -163,7 +163,7 @@ class batman extends TwoLiner {
         double px = width / 2;
         double py = height / 2;
         double size = 50;
-        double pas = 1/step;
+        double pas = 1 / step;
         for (x = -px; x < px; x += pas) {
             y = 1.5 *
                     Math.sqrt(-Math.abs(Math.abs(x) - 1) *
@@ -178,20 +178,46 @@ class batman extends TwoLiner {
             point(graphics, (int) px + x * size, (int) py - y * size);
         }
         for (x = -px; x < px; x += pas) {
-            y =   Math.abs(x / 2) - 0.09137*x*x - 3 +  Math.sqrt(1 -  Math.pow(Math.abs(Math.abs(x) - 2) - 1, 2));
+            y = Math.abs(x / 2) - 0.09137 * x * x - 3 + Math.sqrt(1 - Math.pow(Math.abs(Math.abs(x) - 2) - 1, 2));
             point(graphics, (int) px + x * size, (int) py - y * size);
         }
         for (x = -px; x < px; x += pas) {
-            y = -3*Math.sqrt(1 - Math.pow(x / 7,2))*
+            y = -3 * Math.sqrt(1 - Math.pow(x / 7, 2)) *
                     Math.sqrt(Math.abs(Math.abs(x) - 4) / (Math.abs(x) - 4));
             point(graphics, (int) px + x * size, (int) py - y * size);
         }
         for (x = -px; x < px; x += pas) {
-            y =  (2.71052 + 1.5 - 0.5*
-                    Math.abs(x) - 1.35526*
-                    Math.sqrt(4 - Math.pow(Math.abs(x) - 1,2)))*
-            Math.sqrt(Math.abs(Math.abs(x) - 1) / (Math.abs(x) - 1));
+            y = (2.71052 + 1.5 - 0.5 *
+                    Math.abs(x) - 1.35526 *
+                    Math.sqrt(4 - Math.pow(Math.abs(x) - 1, 2))) *
+                    Math.sqrt(Math.abs(Math.abs(x) - 1) / (Math.abs(x) - 1));
             point(graphics, (int) px + x * size, (int) py - y * size);
         }
+    }
+}
+
+class Astroide1 extends TwoLiner {
+    public void lines(Graphics graphics, double step) {
+        double px = width / 2;
+        double py = height / 2;
+        double size = 50;
+        for ( double f=0; f<=px; f+=10) {
+            double g=py-f*(py-step*2)/(px-step*2);
+            graphics.drawLine((int)f,(int)py,(int)px,(int)g);
+            graphics.drawLine((int)px,(int)g,(int)(width-f),(int)py);
+            graphics.drawLine((int)f,(int)py,(int)px,(int)(height-g));
+            graphics.drawLine((int)px,(int)(height-g),(int)(width-f),(int)py);
+        }
+
+    }
+}
+
+class Cruz extends TwoLiner {
+    public void lines(Graphics graphics, double step) {
+        double px = width / 2;
+        double py = height / 2;
+        graphics.drawLine(0, (int) py, width, (int) py);
+        graphics.drawLine((int) px, height, (int) px, 0);
+
     }
 }

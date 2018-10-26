@@ -13,7 +13,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     public Board() {
         step = 0;
-        t = new Timer(33, this);
+        t = new Timer(33, this); // 0,033 segundos
         t.start();
         addKeyListener(this);
         setFocusable(true);
@@ -27,16 +27,19 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     public void paint(Graphics graphics) {
-        TwoLiner[] twoLiners = new TwoLiner[]{new cogumelo2(), new cogumelo3(), new cogumelo4(), new onda(), new petalas(), new anemona(), new batman()};
+        TwoLiner[] twoLiners = new TwoLiner[]{new cogumelo2(), new cogumelo3(), new cogumelo4(), new onda(),
+                new petalas(), new anemona(), new batman(), new Astroide1(),  new Cruz()};
         int option = select - ASCII;
 
-        if (0<= option && option <= 6) {
+        if (0 <= option && option <= 8) {
             openLiner(twoLiners[select - ASCII], graphics, step);
         }
     }
 
+
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
@@ -52,7 +55,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        step += 0.1;
+        step += 1;
         if (step > 1000) step = 0;
         repaint();
     }
