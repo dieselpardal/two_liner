@@ -32,10 +32,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         int option = 0;
         TwoLiner[] twoLiners = new TwoLiner[]{new cogumelo1(), new cogumelo2(), new cogumelo3(),
                 new cogumelo4(), new onda(), new petalas(), new anemona(), new batman(),
-                new Astroide1(),  new Astroide2(), new Cruz()};
+                new Astroide1(),  new Astroide2(), new Cruz(), new Tekening(), new Spirograph()};
         if (select >ASCII && select<=ASCII+number) { option = select - ASCII; }
         else if(select >= ASCII+letter) { option= select - (ASCII+ 7); }
-        if (0 <= option && option <= 10) {
+        if (0 <= option && option < twoLiners.length) {
             openLiner(twoLiners[option], graphics, step);
         }
     }

@@ -233,7 +233,7 @@ class Astroide2 extends TwoLiner {
         double pi = 3.1415926;
         for (double a = 10; a <= py + 15; a += 15) {
             double u = a;
-            double v = 0;9
+            double v = 0;
             for (double t = 0; t <= pi/2; t += 0.2) {
                 double x = a * (Math.pow(Math.cos(t), step / 10));
                 double y = a * ((Math.pow(Math.sin(t), step / 10)));
@@ -250,6 +250,49 @@ class Astroide2 extends TwoLiner {
                     graphics.drawLine((int) px, (int) py, (int) (px - x), (int) (py - y));
                 }
             }
+        }
+    }
+}
+
+class Tekening extends TwoLiner {
+    public void lines(Graphics graphics, double step) {
+        double f1=Math.random();
+        double f2=Math.random();
+        double f3=Math.random();
+        double v1=Math.random();
+        double v2=Math.random();
+
+        for (double i = 0; i <= 12.6; i += 0.02 + Math.random() ) {
+            double x1 = 20*i;
+            double y1 = (Math.sin(i * 2 * f1)+1)*(height /2)*v1;
+            double x2 = (Math.cos(i * 2 * f2 + f3 * 6.3)+1)*(width / 2)*v2;
+            double y2 = 16*i;
+            graphics.drawLine((int) x1, (int) y1, (int) (x2), (int) (y2));
+
+        }
+    }
+}
+
+class Spirograph extends TwoLiner {
+    public void lines(Graphics graphics, double step) {
+        double r1=Math.sin(step/100);
+        double r2=Math.cos((100-step)/10)/10;
+        double r3=1;
+        double fx = (width/3)/(r1+r2+r3);
+        double fy = (height/3)/(r1+r2+r3);
+        double mx=0,my=0;
+        int m=0;
+        for (double t = 0; t <= 1000; t += 0.4 ) {
+            double x = fx*(Math.cos(t)*r3+Math.cos(t*r2/r1)*(r1+r2))+(width/2);
+            double y = fy*(Math.sin(t)*r3+Math.sin(t*r2/r1)*(r1+r2))+(height/2);
+            if(m==1) {
+                graphics.drawLine((int)x,(int)y,(int)mx,(int)my);
+            }
+            m=1;
+            mx =x;
+            my=y;
+
+
         }
     }
 }
