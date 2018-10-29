@@ -17,8 +17,11 @@ List:
 7) BATMAN
 8) Astroides 1 ( Rede )
 9) Astroides 2 ( Teia ) 
+
 A) Cruz
+
 B) Tekening
+
 C) Spirograph
 
 
