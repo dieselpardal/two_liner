@@ -16,6 +16,10 @@ virtual_env/
 # pytest cache files
 .cache
 
+# class files
+*.class
+
+
 .DS_Store
 /keyrings/live/pubring.gpg~
 /keyrings/live/pubring.kbx~

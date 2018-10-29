@@ -7,7 +7,9 @@ import java.awt.event.KeyListener;
 
 public class Board extends JPanel implements ActionListener, KeyListener {
     Timer t;
-    int ASCII = 49;
+    int ASCII = 48;
+    int number = 9;
+    int letter = 17;
     int select = 49;
     double step = 0;
 
@@ -27,12 +29,14 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     public void paint(Graphics graphics) {
-        TwoLiner[] twoLiners = new TwoLiner[]{new cogumelo2(), new cogumelo3(), new cogumelo4(), new onda(),
-                new petalas(), new anemona(), new batman(), new Astroide1(),  new Cruz()};
-        int option = select - ASCII;
-
-        if (0 <= option && option <= 8) {
-            openLiner(twoLiners[select - ASCII], graphics, step);
+        int option = 0;
+        TwoLiner[] twoLiners = new TwoLiner[]{new cogumelo1(), new cogumelo2(), new cogumelo3(),
+                new cogumelo4(), new onda(), new petalas(), new anemona(), new batman(),
+                new Astroide1(),  new Astroide2(), new Cruz()};
+        if (select >ASCII && select<=ASCII+number) { option = select - ASCII; }
+        else if(select >= ASCII+letter) { option= select - (ASCII+ 7); }
+        if (0 <= option && option <= 10) {
+            openLiner(twoLiners[option], graphics, step);
         }
     }
 
@@ -55,7 +59,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        step += 1;
+        step ++;
         if (step > 1000) step = 0;
         repaint();
     }
