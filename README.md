@@ -21,6 +21,7 @@ A) Cruz
 B) Tekening
 C) Spirograph
 
+
 Fonte:
 
 http://files.datassette.org/livros/colecao_de_programas_para_msx_1.pdf
