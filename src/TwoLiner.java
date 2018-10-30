@@ -1,27 +1,40 @@
 import java.awt.*;
 
 public abstract class TwoLiner {
-    int width = 800;
-    int height = 600;
+    public double width = 0;
+    public double height = 0;
 
     abstract void lines(Graphics graphics, double step);
 
+    public void setSize(Graphics graphics,int width, int height) {
+        this.width = width;
+        this.height = height;
+        graphics.fillRect(0, 0, width, height);
+        graphics.setColor(Color.black);
+    }
     public void point(Graphics graphics, double x, double y) {
         graphics.drawLine((int) x, (int) y, (int) x, (int) y);
+    }
+
+    public void line(Graphics graphics, double x1, double y1, double x2, double y2) {
+        graphics.drawLine((int) x1, (int) y1, (int) x2, (int) y2);
     }
 
     double ifn(boolean v) {
         return v ? -1 : 0;
     }
+
+
 }
 
 class cogumelo1 extends TwoLiner {
     public void lines(Graphics graphics, double step) {
-        double size = 3;
-        for (double z = 0; z < 10; z += 0.03) {
-            for (double x = 0; x < 10; x += 0.03) {
-                double y = -(Math.cos(-step/10 +3 * Math.sqrt((x - 5) * (x - 5) + (z - 5) * (z - 5)))) * 5 + 30;
-                point(graphics, 10+(x * 24 + z)*size , height/2.5 - (y - z * 10)*size);
+        double sizex = this.width/266;
+        double sizey = this.height/266;
+        for (double z = -5; z < 5; z += 0.03) {
+            for (double x = -5; x < 5; x += 0.03) {
+                double y = -(Math.cos(-step / 10 + 3 * Math.sqrt(x*x + z*z))) * 5;
+                point(graphics, this.width/2 + (x * 24 + z) * sizex, this.height / 2 - (y - z * 10) * sizey);
             }
         }
     }
@@ -29,10 +42,12 @@ class cogumelo1 extends TwoLiner {
 
 class cogumelo2 extends TwoLiner {
     public void lines(Graphics graphics, double step) {
-        for (double z = 0; z < 10; z += 0.03) {
-            for (double x = 0; x < 10; x += 0.03) {
-                double y = -30 * Math.cos(step/10 + 3 * Math.sqrt((x - 5) * (x - 5) + (z - 5) * (z - 5))) / 2 + 50;
-                point(graphics, 75 + x * 60 + z * 3, 25 + y + z * 40);
+        double sizex = this.width/800;
+        double sizey = this.height/600;
+        for (double z = -5; z < 5; z += 0.03) {
+            for (double x = -5; x < 5; x += 0.03) {
+                double y = -30 * Math.cos(step / 10 + 3 * Math.sqrt(x*x + z*z)) / 2 ;
+                point(graphics, this.width/2 + ( x * 60 + z * 3)* sizex, this.height / 2 + ( y + z * 40)* sizey);
             }
         }
     }
@@ -41,20 +56,20 @@ class cogumelo2 extends TwoLiner {
 
 class cogumelo3 extends TwoLiner {
     public void lines(Graphics graphics, double step) {
-        double DU = 3;
-        for (double b = 0; b < 128 * DU; b += 1) {
+        double px = this.width / 2;
+        double py = this.height / 2;
+        for (double b = 0; b < px ; b += 1) {
             double x4 = b * b;
-            double m = -128 * DU;
-            double a = Math.sqrt((128 * DU * 128 * DU) - x4);
+            double m = -px ;
+            double a = Math.sqrt(px * px - x4);
             for (double i = -a; i < a; i += 5) {
-                double r = Math.sqrt(x4 + i * i + step * 1000) / (128 * DU);
+                double r = Math.sqrt(x4 + i * i + step * 1000) / px;
                 double f = Math.cos(9 * r) * (1 - r) * 2;
-                double y = i / 5 + f * 32 * DU;
+                double y = i / 5 + f * px/4;
                 if (!(y <= m)) {
                     m = y;
-                    y = 128 * DU + y;
-                    point(graphics, 132 * DU + b, 191 * DU * 1.2 - y);
-                    point(graphics, 132 * DU - b, 191 * DU * 1.2 - y);
+                    point(graphics, px + b, py - y);
+                    point(graphics, px - b, py- y);
                 }
             }
         }
@@ -62,20 +77,21 @@ class cogumelo3 extends TwoLiner {
 }
 
 class cogumelo4 extends TwoLiner {
-    public void lines(Graphics graphics, double step) {
-        double DU = 3;
-        for (double b = 0; b < 128 * DU; b += 1) {
+    public void lines(Graphics graphics,  double step) {
+        double px = this.width / 2;
+        double py = this.height / 2;
+        for (double b = 0; b < px; b += 1) {
             double x4 = b * b;
-            double m = -128 * DU;
-            double a = Math.sqrt((128 * DU * 128 * DU) - x4);
+            double m = -px;
+            double a = Math.sqrt((px*px) - x4);
             for (double i = -a; i < a; i += 3) {
-                double r = Math.sqrt(x4 + i * i) / (128 * DU);
-                double f = Math.cos(step/5 * r) * (1 - r) * 2;
-                double y = i / 5 + f * 32 * DU;
+                double r = Math.sqrt(x4 + i * i) / px;
+                double f = Math.cos(step / 5 * r) * (1 - r) * 2;
+                double y = i / 5 + f * px/4;
                 if (!(y <= m)) {
                     m = y;
-                    point(graphics, 132 * DU + b, 191 * DU * 0.6 - y);
-                    point(graphics, 132 * DU - b, 191 * DU * 0.6 - y);
+                    point(graphics, px + b, py*1.3 - y);
+                    point(graphics, px - b, py*1.3 - y);
                 }
             }
         }
@@ -89,6 +105,8 @@ class petalas extends TwoLiner {
         double q = 2 * pi;
         double n1 = 15;
         double n2 = 12;
+        double sizex = this.width/800;
+        double sizey = this.height/600;
         for (double v = 1; v < 10; v += 0.1) {
             double i = v * pi / 30;
             double m1 = n1 * v;
@@ -99,13 +117,13 @@ class petalas extends TwoLiner {
                 double r = s * m1 + m2;
                 double x = Math.cos(a + 0) * r;
                 double y = Math.sin(a + 0) * r;
-                xp = x * 0.9 + width / 2;
-                yp = height / 1.7 - (y * 0.9 + 85);
+                xp = x * sizex + this.width / 2;
+                yp = this.height / 1.7 - ((y+50) * sizey);
                 if (f == 0) {
                     x0 = xp;
                     y0 = yp;
                 } else {
-                    graphics.drawLine((int) x0, (int) y0, (int) xp, (int) yp);
+                    line(graphics, x0, y0, xp, yp);
                     x0 = xp;
                     y0 = yp;
                 }
@@ -115,15 +133,15 @@ class petalas extends TwoLiner {
 }
 
 class onda extends TwoLiner {
-    public void lines(Graphics graphics, double step) {
-        int px = 0, py = 0;
-        for (double g = 0; g < 400; g += 5) {
+    public void lines(Graphics graphics,  double step) {
+        double px = 0, py = 0;
+        for (double g = 0; g < this.height; g += 5) {
             boolean r = false;
-            for (double f = 0; f < 600; f += 5) {
-                int x = (int) Math.round(g * 0.5 + f);
-                int y = (int) Math.round(75 + g + Math.cos((step/5 * 20 + f) / 30) * Math.cos((20 + g) / 30) * 30);
+            for (double f = 0; f < this.width*2; f += 5) {
+                double x = Math.round(g * 0.5 + f);
+                double y = Math.round(g + Math.cos((step / 5 * 20 + f) / 30) * Math.cos((20 + g) / 30) * 30);
                 if (r) {
-                    graphics.drawLine(px, py, x, y);
+                    line(graphics, px-this.width/2, py, x-this.width/2, y);
                 } else {
 
                     r = true;
@@ -133,10 +151,12 @@ class onda extends TwoLiner {
             }
         }
     }
+
+
 }
 
 class anemona extends TwoLiner {
-    public void lines(Graphics graphics, double step) {
+    public void lines(Graphics graphics,  double step) {
         double x0 = 0, y0 = 0;
         double pi = 3.1415926;
         double q = 2 * pi;
@@ -144,11 +164,13 @@ class anemona extends TwoLiner {
         double s = pi / 10;
         double t = 60;
         double u = 300 / q;
+        double sizex = this.width/800;
+        double sizey = this.height/600;
         for (double b = 0; b < q; b += r) {
             double c = t * pi / 180;
             c = ifn(b > pi) * c - ifn(b <= pi) * c;
             for (double h = 0; h < q; h += s) {
-                double y = Math.cos(h + step/5) * 142;
+                double y = Math.cos(h + step / 5) * 142;
                 double x = Math.cos(b) * h * u;
                 double z = -(ifn(Math.sin(b) == 1)) * h * u - ifn(Math.sin(b) != 1) * Math.tan(b) * x;
                 z = Math.abs(z);
@@ -156,11 +178,11 @@ class anemona extends TwoLiner {
                 double j = Math.sqrt(z * z + y * y);
                 double a = Math.atan(y / z) + c;
                 y = j * Math.sin(a);
-                double xp = x * 0.7 + width / 2;
-                double yp = y * 0.7 + height / 2;
+                double xp = x * sizex + this.width / 2;
+                double yp = y * sizey+ this.height / 2;
                 x0 = -x0 * ifn(h != 0) - xp * ifn(h == 0);
                 y0 = -y0 * ifn(h != 0) - xp * ifn(h == 0);
-                graphics.drawLine((int) x0, (int) y0, (int) xp, (int) yp);
+                line(graphics, x0, y0, xp, yp);
                 x0 = xp;
                 y0 = yp;
             }
@@ -169,57 +191,57 @@ class anemona extends TwoLiner {
 }
 
 class batman extends TwoLiner {
-    public void lines(Graphics graphics, double step) {
+    public void lines(Graphics graphics,  double step) {
         double y;
         double x;
-        double px = width / 2;
-        double py = height / 2;
-        double size = 50;
-        double pas = 1 / step/10;
-            for (x = -px; x < px; x += pas) {
-                y = 1.5 *
-                        Math.sqrt(-Math.abs(Math.abs(x) - 1) *
-                                Math.abs(3 - Math.abs(x)) / ((Math.abs(x) - 1) *
-                                (3 - Math.abs(x)))) *
-                        (1 + Math.abs(Math.abs(x) - 3) / (Math.abs(x) - 3)) *
-                        Math.sqrt(1 - Math.pow(x / 7, 2)) + (4.5 + 0.75 *
-                        (Math.abs(x - 0.5) + Math.abs(x + 0.5)) - 2.75 *
-                        (Math.abs(x - 0.75) + Math.abs(x + 0.75))) *
-                        (1 + Math.abs(1 - Math.abs(x)) / (1 - Math.abs(x)));
+        double px = this.width / 2;
+        double py = this.height / 2;
+        double sizex = this.width/16;
+        double sizey = this.height/12;
+        double pas = 1 / step / 10;
+        for (x = -px; x < px; x += pas) {
+            y = 1.5 *
+                    Math.sqrt(-Math.abs(Math.abs(x) - 1) *
+                            Math.abs(3 - Math.abs(x)) / ((Math.abs(x) - 1) *
+                            (3 - Math.abs(x)))) *
+                    (1 + Math.abs(Math.abs(x) - 3) / (Math.abs(x) - 3)) *
+                    Math.sqrt(1 - Math.pow(x / 7, 2)) + (4.5 + 0.75 *
+                    (Math.abs(x - 0.5) + Math.abs(x + 0.5)) - 2.75 *
+                    (Math.abs(x - 0.75) + Math.abs(x + 0.75))) *
+                    (1 + Math.abs(1 - Math.abs(x)) / (1 - Math.abs(x)));
 
-                point(graphics, (int) px + x * size, (int) py - y * size);
-            }
-            for (x = -px; x < px; x += pas) {
-                y = Math.abs(x / 2) - 0.09137 * x * x - 3 + Math.sqrt(1 - Math.pow(Math.abs(Math.abs(x) - 2) - 1, 2));
-                point(graphics, (int) px + x * size, (int) py - y * size);
-            }
-            for (x = -px; x < px; x += pas) {
-                y = -3 * Math.sqrt(1 - Math.pow(x / 7, 2)) *
-                        Math.sqrt(Math.abs(Math.abs(x) - 4) / (Math.abs(x) - 4));
-                point(graphics, (int) px + x * size, (int) py - y * size);
-            }
-            for (x = -px; x < px; x += pas) {
-                y = (2.71052 + 1.5 - 0.5 *
-                        Math.abs(x) - 1.35526 *
-                        Math.sqrt(4 - Math.pow(Math.abs(x) - 1, 2))) *
-                        Math.sqrt(Math.abs(Math.abs(x) - 1) / (Math.abs(x) - 1));
-                point(graphics, (int) px + x * size, (int) py - y * size);
-            }
+            point(graphics, (int) px + x * sizex, (int) py - y * sizey);
+        }
+        for (x = -px; x < px; x += pas) {
+            y = Math.abs(x / 2) - 0.09137 * x * x - 3 + Math.sqrt(1 - Math.pow(Math.abs(Math.abs(x) - 2) - 1, 2));
+            point(graphics, (int) px + x * sizex, (int) py - y * sizey);
+        }
+        for (x = -px; x < px; x += pas) {
+            y = -3 * Math.sqrt(1 - Math.pow(x / 7, 2)) *
+                    Math.sqrt(Math.abs(Math.abs(x) - 4) / (Math.abs(x) - 4));
+            point(graphics, (int) px + x * sizex, (int) py - y * sizey);
+        }
+        for (x = -px; x < px; x += pas) {
+            y = (2.71052 + 1.5 - 0.5 *
+                    Math.abs(x) - 1.35526 *
+                    Math.sqrt(4 - Math.pow(Math.abs(x) - 1, 2))) *
+                    Math.sqrt(Math.abs(Math.abs(x) - 1) / (Math.abs(x) - 1));
+            point(graphics, (int) px + x * sizex, (int) py - y * sizey);
+        }
 
     }
 }
 
 class Astroide1 extends TwoLiner {
-    public void lines(Graphics graphics, double step) {
-        double px = width / 2;
-        double py = height / 2;
-       // double size = 50;
-        for ( double f=0; f<=px; f+=10) {
-            double g=py-f*(py-step*2)/(px-step*2);
-            graphics.drawLine((int)f,(int)py,(int)px,(int)g);
-            graphics.drawLine((int)px,(int)g,(int)(width-f),(int)py);
-            graphics.drawLine((int)f,(int)py,(int)px,(int)(height-g));
-            graphics.drawLine((int) px, (int) (height - g), (int) (width - f), (int) py);
+    public void lines(Graphics graphics,  double step) {
+        double px = this.width / 2;
+        double py = this.height / 2;
+        for (double f = 0; f <= px; f += 10) {
+            double g = py - f * (py - step * 2) / (px - step * 2);
+            line(graphics, f, py, px, g);
+            line(graphics, px, g, this.width - f, py);
+            line(graphics, f, py, px, this.height - g);
+            line(graphics, px, this.height - g, this.width - f, py);
         }
 
     }
@@ -227,27 +249,26 @@ class Astroide1 extends TwoLiner {
 
 class Astroide2 extends TwoLiner {
     public void lines(Graphics graphics, double step) {
-        double px = width / 2;
-        double py = height / 2;
-        double size = 50;
+        double px = this.width / 2;
+        double py = this.height / 2;
         double pi = 3.1415926;
         for (double a = 10; a <= py + 15; a += 15) {
             double u = a;
             double v = 0;
-            for (double t = 0; t <= pi/2; t += 0.2) {
+            for (double t = 0; t <= pi / 2; t += 0.2) {
                 double x = a * (Math.pow(Math.cos(t), step / 10));
                 double y = a * ((Math.pow(Math.sin(t), step / 10)));
-                graphics.drawLine((int) (px + u), (int) (py + v), (int) (px + x), (int) (py + y));
-                graphics.drawLine((int) (px + u), (int) (py - v), (int) (px + x), (int) (py - y));
-                graphics.drawLine((int) (px - u), (int) (py + v), (int) (px - x), (int) (py + y));
-                graphics.drawLine((int) (px - u), (int) (py - v), (int) (px - x), (int) (py - y));
+                line(graphics, px + u, py + v, px + x, py + y);
+                line(graphics, px + u, py - v, px + x, py - y);
+                line(graphics, px - u, py + v, px - x, py + y);
+                line(graphics, px - u, py - v, px - x, py - y);
                 u = x;
                 v = y;
                 if (a >= Math.round(py)) {
-                    graphics.drawLine((int) px, (int) py, (int) (px + x), (int) (py + y));
-                    graphics.drawLine((int) px, (int) py, (int) (px + x), (int) (py - y));
-                    graphics.drawLine((int) px, (int) py, (int) (px - x), (int) (py + y));
-                    graphics.drawLine((int) px, (int) py, (int) (px - x), (int) (py - y));
+                    line(graphics, px, py, px + x, py + y);
+                    line(graphics, px, py, px + x, py - y);
+                    line(graphics, px, py, px - x, py + y);
+                    line(graphics, px, py, px - x, py - y);
                 }
             }
         }
@@ -256,53 +277,50 @@ class Astroide2 extends TwoLiner {
 
 class Tekening extends TwoLiner {
     public void lines(Graphics graphics, double step) {
-        double f1=Math.random();
-        double f2=Math.random();
-        double f3=Math.random();
-        double v1=Math.random();
-        double v2=Math.random();
+        double f1 = Math.random();
+        double f2 = Math.random();
+        double f3 = Math.random();
+        double v1 = Math.random();
+        double v2 = Math.random();
 
-        for (double i = 0; i <= 12.6; i += 0.02 + Math.random() ) {
-            double x1 = 20*i;
-            double y1 = (Math.sin(i * 2 * f1)+1)*(height /2)*v1;
-            double x2 = (Math.cos(i * 2 * f2 + f3 * 6.3)+1)*(width / 2)*v2;
-            double y2 = 16*i;
-            graphics.drawLine((int) x1, (int) y1, (int) (x2), (int) (y2));
-
+        for (double i = 0; i <= 12.6; i += 0.02 + Math.random()) {
+            double x1 = 20 * i;
+            double y1 = (Math.sin(i * 2 * f1) + 1) * (this.height / 2) * v1;
+            double x2 = (Math.cos(i * 2 * f2 + f3 * 6.3) + 1) * (this.width / 2) * v2;
+            double y2 = 16 * i;
+            line(graphics, x1, y1, x2, y2);
         }
     }
 }
 
 class Spirograph extends TwoLiner {
     public void lines(Graphics graphics, double step) {
-        double r1=Math.sin(step/100);
-        double r2=Math.cos((100-step)/10)/10;
-        double r3=1;
-        double fx = (width/3)/(r1+r2+r3);
-        double fy = (height/3)/(r1+r2+r3);
-        double mx=0,my=0;
-        int m=0;
-        for (double t = 0; t <= 1000; t += 0.4 ) {
-            double x = fx*(Math.cos(t)*r3+Math.cos(t*r2/r1)*(r1+r2))+(width/2);
-            double y = fy*(Math.sin(t)*r3+Math.sin(t*r2/r1)*(r1+r2))+(height/2);
-            if(m==1) {
-                graphics.drawLine((int)x,(int)y,(int)mx,(int)my);
+        double r1 = Math.sin(step / 100);
+        double r2 = Math.cos((100 - step) / 10) / 10;
+        double r3 = 1;
+        double fx = (this.width / 3) / (r1 + r2 + r3);
+        double fy = (this.height / 3) / (r1 + r2 + r3);
+        double mx = 0, my = 0;
+        int m = 0;
+        for (double t = 0; t <= 1000; t += 0.4) {
+            double x = fx * (Math.cos(t) * r3 + Math.cos(t * r2 / r1) * (r1 + r2)) + (this.width / 2);
+            double y = fy * (Math.sin(t) * r3 + Math.sin(t * r2 / r1) * (r1 + r2)) + (this.height / 2);
+            if (m == 1) {
+                line(graphics, x, y, mx, my);
             }
-            m=1;
-            mx =x;
-            my=y;
-
-
+            m = 1;
+            mx = x;
+            my = y;
         }
     }
 }
 
 class Cruz extends TwoLiner {
     public void lines(Graphics graphics, double step) {
-        double px = width / 2;
-        double py = height / 2;
-        graphics.drawLine(0, (int) py, width, (int) py);
-        graphics.drawLine((int) px, height, (int) px, 0);
+        double px = this.width / 2;
+        double py = this.height / 2;
+        line(graphics, 0, py, this.width, py);
+        line(graphics, px, this.height, px, 0);
 
     }
 }

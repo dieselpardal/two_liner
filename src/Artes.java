@@ -9,9 +9,8 @@ public class Artes extends JFrame {
         add(new Board());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(width, height);
-        setResizable(false);
+        setResizable(true);
         setLocationRelativeTo(null);
         setVisible(true);
-
     }
 }

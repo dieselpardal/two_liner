@@ -23,18 +23,21 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     public void openLiner(TwoLiner liner, Graphics graphics, double step) {
         graphics.setColor(Color.WHITE);
-        graphics.fillRect(0, 0, liner.width, liner.height);
-        graphics.setColor(Color.black);
-        liner.lines(graphics, step);
+        liner.setSize(graphics, getSize().width, getSize().height);
+
+        liner.lines(graphics,step);
     }
 
     public void paint(Graphics graphics) {
         int option = 0;
         TwoLiner[] twoLiners = new TwoLiner[]{new cogumelo1(), new cogumelo2(), new cogumelo3(),
                 new cogumelo4(), new onda(), new petalas(), new anemona(), new batman(),
-                new Astroide1(),  new Astroide2(), new Cruz(), new Tekening(), new Spirograph()};
-        if (select >ASCII && select<=ASCII+number) { option = select - ASCII; }
-        else if(select >= ASCII+letter) { option= select - (ASCII+ 7); }
+                new Astroide1(), new Astroide2(), new Cruz(), new Tekening(), new Spirograph()};
+        if (select > ASCII && select <= ASCII + number) {
+            option = select - ASCII;
+        } else if (select >= ASCII + letter) {
+            option = select - (ASCII + 7);
+        }
         if (0 <= option && option < twoLiners.length) {
             openLiner(twoLiners[option], graphics, step);
         }
@@ -59,7 +62,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        step ++;
+        step++;
         if (step > 1000) step = 0;
         repaint();
     }
