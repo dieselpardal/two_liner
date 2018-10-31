@@ -10,6 +10,8 @@ virtual_env/
 .idea/
 *.swp
 
+# LIB Files
+lib/
 # SQLite3 database
 *.sqlite
 
