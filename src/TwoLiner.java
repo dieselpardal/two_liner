@@ -32,8 +32,10 @@ class cogumelo1 extends TwoLiner {
     public void lines(Graphics graphics, double step) {
         double sizex = this.width / 266;
         double sizey = this.height / 266;
-        for (double z = -5; z < 5; z += 0.03) {
-            for (double x = -5; x < 5; x += 0.03) {
+        double diameter = 0.1/Math.sqrt(sizex*sizex+sizey*sizey);
+        System.out.println("Diameter:"+diameter);
+        for (double z = -5; z < 5; z +=diameter) {
+            for (double x = -5; x < 5; x += diameter) {
                 double y = -(Math.cos(-step / 10 + 3 * Math.sqrt(x * x + z * z))) * 5;
                 point(graphics, this.width / 2 + (x * 24 + z) * sizex, this.height / 2 - (y - z * 10) * sizey);
             }
@@ -45,8 +47,10 @@ class cogumelo2 extends TwoLiner {
     public void lines(Graphics graphics, double step) {
         double sizex = this.width / 800;
         double sizey = this.height / 600;
-        for (double z = -5; z < 5; z += 0.03) {
-            for (double x = -5; x < 5; x += 0.03) {
+        double diameter = 0.05/Math.sqrt(sizex*sizex+sizey*sizey);
+
+        for (double z = -5; z < 5; z += diameter) {
+            for (double x = -5; x < 5; x += diameter) {
                 double y = -30 * Math.cos(step / 10 + 3 * Math.sqrt(x * x + z * z)) / 2;
                 point(graphics, this.width / 2 + (x * 60 + z * 3) * sizex, this.height / 2 + (y + z * 40) * sizey);
             }

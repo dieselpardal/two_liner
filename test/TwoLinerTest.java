@@ -34,7 +34,8 @@ public class TwoLinerTest extends TestCase {
     public void testLine() {
         Graphics graphics = mock(Graphics.class);
         TwoLiner twoLiner = mock(TwoLiner.class);
-        doCallRealMethod().when(twoLiner).line(isA(Graphics.class), any(double.class), any(double.class), any(double.class), any(double.class));
+        doCallRealMethod().when(twoLiner).line(isA(Graphics.class), any(double.class),
+                any(double.class), any(double.class), any(double.class));
         twoLiner.line(graphics, 1, 2, 3, 4);
         verify(twoLiner, times(1)).line(graphics, 1, 2, 3, 4);
 
