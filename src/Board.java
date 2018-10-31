@@ -6,26 +6,22 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Board extends JPanel implements ActionListener, KeyListener {
-    Timer t;
-    int ASCII = 48;
-    int number = 9;
-    int letter = 17;
-    int select = 49;
-    double step = 0;
+    private int select = 49;
+    private double step;
 
-    public Board() {
+    Board() {
         step = 0;
-        t = new Timer(33, this); // 0,033 segundos
+        Timer t = new Timer(33, this);
         t.start();
         addKeyListener(this);
         setFocusable(true);
     }
 
-    public void openLiner(TwoLiner liner, Graphics graphics, double step) {
+    private void openLiner(TwoLiner liner, Graphics graphics, double step) {
         graphics.setColor(Color.WHITE);
         liner.setSize(graphics, getSize().width, getSize().height);
 
-        liner.lines(graphics,step);
+        liner.lines(graphics, step);
     }
 
     public void paint(Graphics graphics) {
@@ -33,12 +29,15 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         TwoLiner[] twoLiners = new TwoLiner[]{new cogumelo1(), new cogumelo2(), new cogumelo3(),
                 new cogumelo4(), new onda(), new petalas(), new anemona(), new batman(),
                 new Astroide1(), new Astroide2(), new Cruz(), new Tekening(), new Spirograph()};
+        int ASCII = 48;
+        int number = 9;
+        int letter = 17;
         if (select > ASCII && select <= ASCII + number) {
             option = select - ASCII;
         } else if (select >= ASCII + letter) {
             option = select - (ASCII + 7);
         }
-        if (0 <= option && option < twoLiners.length) {
+        if (twoLiners.length > option) {
             openLiner(twoLiners[option], graphics, step);
         }
     }

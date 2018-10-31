@@ -1,13 +1,13 @@
 import javax.swing.*;
 
-public class Artes extends JFrame {
+class Artes extends JFrame {
 
-    int width = 800;
-    int height = 600;
-    public Artes() {
+    Artes() {
 
         add(new Board());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        int width = 800;
+        int height = 600;
         setSize(width, height);
         setResizable(true);
         setLocationRelativeTo(null);
